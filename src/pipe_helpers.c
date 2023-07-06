@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 02:42:04 by aaslan            #+#    #+#             */
-/*   Updated: 2023/06/23 17:23:09 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:44:20 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ void	last_pipe_handler(void)
 {
 	char	*command;
 
+	if (g_shell->token_count == 1)
+	{
+		ft_printf(STDERR_FILENO,
+			"bash: syntax error near unexpected token `|'\n");
+		return ;
+	}
+	if (g_shell->exit_status == 2)
+		return ;
 	while (1)
 	{
 		command = readline("> ");

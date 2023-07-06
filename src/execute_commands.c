@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:42:13 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/06 00:07:25 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:56:51 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static void	restore_fd_and_clear_commands(char **commands)
 
 static void	execute_commands_selector(char **commands)
 {
-	printf("execute_commands_selector -- %s\n", commands[0]);
-
 	if (commands == NULL || commands[0] == NULL)
 	{
 		unlink(".heredoc_temp");
@@ -54,8 +52,6 @@ static void	execute_with_pipe(t_token *before_pipe, t_token *pipe_token,
 
 	if (redirect_file_is_wrong(before_pipe))
 	{
-		ft_printf(STDERR_FILENO,
-			"bash: syntax error near unexpected token `newline\'\n");
 		g_shell->exit_status = 2;
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 14:26:30 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/05 12:27:43 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 17:36:12 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_shell
 	int		dup_fd[2];
 	int		file_error_found;
 	int		heredoc_count;
+	int		token_count;
 }	t_shell;
 
 extern t_shell	*g_shell;

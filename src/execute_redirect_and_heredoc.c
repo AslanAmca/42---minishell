@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:05:52 by aaslan            #+#    #+#             */
-/*   Updated: 2023/06/20 15:36:38 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:56:58 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,20 @@ int	redirect_file_is_wrong(t_token *token)
 	temp_token = token;
 	while (temp_token != NULL)
 	{
-		if (temp_token->type == REDIRECT_TYPE
-			&& (temp_token->next == NULL
-				|| temp_token->next->type != FILE_TYPE))
+		if (temp_token->type == REDIRECT_TYPE && temp_token->next == NULL)
+		{
+			ft_printf(STDERR_FILENO,
+				"bash: syntax error near unexpected token `newline\'\n");
 			return (1);
+		}
+		if (temp_token->type == REDIRECT_TYPE && temp_token->next != NULL
+			&& temp_token->next->type != FILE_TYPE)
+		{
+			ft_printf(STDERR_FILENO,
+				"bash: syntax error near unexpected token `%s\'\n",
+				temp_token->next->value);
+			return (1);
+		}
 		temp_token = temp_token->next;
 	}
 	return (0);

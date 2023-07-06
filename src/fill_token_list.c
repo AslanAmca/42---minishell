@@ -6,11 +6,24 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:13:02 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/05 21:48:06 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:26:07 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	get_token_count(t_token *token)
+{
+	int	count;
+
+	count = 0;
+	while (token != NULL)
+	{
+		count++;
+		token = token->next;
+	}
+	return (count);
+}
 
 static t_token	*get_last_token(t_token *token)
 {
@@ -70,4 +83,5 @@ void	fill_token_list(char **parsed_commands, t_token **token_list)
 		add_token_to_list(token_list, token);
 		i++;
 	}
+	g_shell->token_count = get_token_count(*token_list);
 }

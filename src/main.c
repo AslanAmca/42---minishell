@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:46:43 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/06 01:56:53 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 16:58:39 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	init_global_shell(void)
 	g_shell->exit_status = 0;
 	g_shell->file_error_found = 0;
 	g_shell->heredoc_count = 0;
+	g_shell->token_count = 0;
 }
 
 static void	init_env_variables(char **envp)
