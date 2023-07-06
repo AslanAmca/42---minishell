@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:46:43 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/06 16:58:39 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 21:59:11 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static void	sigint_handler(int signal_no)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	//if (g_shell->heredoc_count >= 2) // unlink ile dosyanın silinmesi gerekebilir çünkü bug oluyor
-	//	exit (0);
 	g_shell->exit_status = 130;
 }
 

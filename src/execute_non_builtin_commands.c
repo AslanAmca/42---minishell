@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 02:35:41 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/05 12:26:41 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 21:51:47 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	execute_non_builtin_command_helper(char **commands,
 			exit(0);
 	}
 	waitpid(pid, &result, 0);
-	unlink(".heredoc_temp");
+	unlink("bin/.heredoc_temp");
 	if (WIFEXITED(result))
 		g_shell->exit_status = WEXITSTATUS(result);
 }
@@ -100,7 +100,7 @@ void	execute_non_builtin_commands(char **commands)
 	char	*command_executable_path;
 
 	path_env_value = get_path_env_value();
-	if (path_env_value == NULL)
+	if (path_env_value == NULL || path_env_value[0] == '\0')
 		return ;
 	command_executable_path = get_executable_path(commands, path_env_value);
 	free(path_env_value);

@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 02:42:04 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/06 16:44:20 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 21:33:34 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	last_pipe_handler(void)
 		}
 		command_handler(command);
 		free(command);
+		break ;
 	}
 }
 

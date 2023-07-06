@@ -6,45 +6,24 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 19:34:22 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/06 17:38:39 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 21:56:31 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc_no_problem(t_token *token, int *pipe_fd)
+static void	print_error(char *delimiter)
 {
-	while (token != NULL && token->next != NULL && token->type != PIPE_TYPE)
-	{
-		// cat << , | grep i << ,, | wc -l
-		// grep i << ,, | wc -l
-		// yukarıda ki örnekte patlıyordu bu düzeltti.
-		if (ft_strncmp(token->value, "grep", 5) == 0 && ft_strncmp(token->next->next->value, "<<", 2) == 0)
-		{
-			if (*pipe_fd != 0)
-				close(*pipe_fd);
-			*pipe_fd = 0;
-			return (1);
-		}
+	ft_printf(STDERR_FILENO,
+		"\nbash: warning: here-document delimited by end-of-file (wanted `%s')\n",
+		delimiter);
+}
 
-		if (token->next->type == REDIRECT_TYPE
-			&& ft_strncmp(token->next->value, "<<", 2) == 0)
-		{
-			if (ft_strncmp(token->value, "cat", 4) == 0
-				|| ft_strncmp(token->value, "head", 5) == 0
-				|| ft_strncmp(token->value, "tail", 5) == 0
-				|| ft_strncmp(token->value, "sort", 5) == 0)
-			{
-				if (*pipe_fd != 0)
-					close(*pipe_fd);
-				*pipe_fd = 0;
-				return (1);
-			}
-			return (0);
-		}
-		token = token->next;
-	}
-	return (1);
+static void	heredoc_handler_helper(int fd, char **temp_token, char *line)
+{
+	change_all_env_variable_to_value(temp_token);
+	ft_printf(fd, "%s\n", temp_token[0]);
+	clear_temp_token(temp_token, line);
 }
 
 static void	readable_for_heredoc(char *file_name, t_token *token)
@@ -76,13 +55,6 @@ static void	readable_for_heredoc(char *file_name, t_token *token)
 	}
 }
 
-static void	heredoc_handler_helper(int fd, char **temp_token, char *line)
-{
-	change_all_env_variable_to_value(temp_token);
-	ft_printf(fd, "%s\n", temp_token[0]);
-	clear_temp_token(temp_token, line);
-}
-
 static void	heredoc_handler(char *delimiter, int fd)
 {
 	char	*line;
@@ -97,7 +69,7 @@ static void	heredoc_handler(char *delimiter, int fd)
 		temp_token[1] = NULL;
 		if (line == NULL)
 		{
-			ft_printf(STDERR_FILENO, "\nbash: warning: here-document delimited by end-of-file (wanted `%s')\n", delimiter);
+			print_error(delimiter);
 			clear_temp_token(temp_token, line);
 			break ;
 		}
@@ -116,7 +88,7 @@ void	execute_heredoc(char *file_name, t_token *token, int *heredoc_count)
 	int	fd;
 
 	*heredoc_count += 1;
-	fd = open(".heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open("bin/.heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		ft_printf(STDERR_FILENO, "File can't opened !\n");
@@ -125,5 +97,5 @@ void	execute_heredoc(char *file_name, t_token *token, int *heredoc_count)
 		return ;
 	}
 	heredoc_handler(file_name, fd);
-	readable_for_heredoc(".heredoc_temp", token);
+	readable_for_heredoc("bin/.heredoc_temp", token);
 }

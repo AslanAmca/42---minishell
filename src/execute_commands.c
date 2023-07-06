@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:42:13 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/06 16:56:51 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/06 21:51:42 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	execute_commands_selector(char **commands)
 {
 	if (commands == NULL || commands[0] == NULL)
 	{
-		unlink(".heredoc_temp");
+		unlink("bin/.heredoc_temp");
 		return ;
 	}
 	if (ft_strcmp("echo", commands[0]) == 0)
