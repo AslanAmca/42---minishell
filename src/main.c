@@ -6,7 +6,7 @@
 /*   By: aaslan <aaslan@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:46:43 by aaslan            #+#    #+#             */
-/*   Updated: 2023/07/06 22:22:38 by aaslan           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:13:35 by aaslan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	init_env_variables(char **envp)
 static void	sigint_handler(int signal_no)
 {
 	(void)signal_no;
-
 	if (access("bin/.heredoc_temp", F_OK) == 0)
 	{
 		ft_printf(STDOUT_FILENO, "\n");
